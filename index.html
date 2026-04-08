@@ -236,6 +236,12 @@
 			noteDiv.appendChild(contentP);
 			notesContainer.appendChild(noteDiv);
 		});
+
+		const editBtn = document.createElement("button");
+		editBtn.textContent = "✏ Edit";
+		editBtn.setAttribute("data-action", "edit");
+		editBtn.setAttribute("data-id", note.id);
+
 		updateCounter();
 		}
 
@@ -336,6 +342,35 @@
 		}
 
 		init();
+
+		const editTarget = e.target.closest('[data-action="edit"]');
+		if (editTarget) {
+		const id = parseInt(editTarget.getAttribute("data-id"), 10);
+			const found = notes.find(n => n.id === id);
+			if (found) {
+				const newTitle = prompt("New title:", found.title);
+				if (newTitle !== null && newTitle.trim() !== "") {
+					found.title = newTitle.trim();
+					renderNotes();
+				}
+			}
+		}
+
+		titleInput.addEventListener("keydown", (e) => {
+			if (e.key === "Enter") {
+				addNote();
+			}
+		});
+
+		function updateWindowSize() {
+			const w = window.innerWidth;
+			const h = window.innerHeight;
+			let category;
+			if (w < 480) category = "📱📱 Mobile";
+			else if (w < 1024) category = "💻💻 Tablet";
+			else category = "🖥🖥 Desktop";
+			windowSizeSpan.textContent = `${w} x ${h} px (${category})`;
+		}
 	</script>
 
 </body>
