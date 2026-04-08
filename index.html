@@ -184,6 +184,13 @@
 			noteCounterSpan.textContent =
 			count === 1 ? "1 note" : `${count} notes`;
 		}
+
+		function renderNotes() {
+		while (notesContainer.firstChild) {
+		notesContainer.removeChild(notesContainer.firstChild);
+		}
+
+		}
 	</script>
 
 </body>
